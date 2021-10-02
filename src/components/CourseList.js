@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { getCourseTerm, hasConflict, getCourseNumber, terms } from '../utilities/times.js';
+import { getCourseTerm, terms } from '../utilities/times.js';
+import Course from '../components/Course.js';
 
 const CourseList = ({ courses }) => {
     const [term, setTerm] = useState('Fall');
@@ -40,27 +41,5 @@ const TermButton = ({term, setTerm, checked}) => (
       </label>
     </>
 );
-
-const toggle = (x, lst) => (
-    lst.includes(x) ? lst.filter(y => y !== x) : [x, ...lst]
-);
-
-export const Course = ({ course, selected, setSelected }) => {
-    const isSelected = selected.includes(course);
-    const isDisabled = !isSelected && hasConflict(course, selected);
-    const style = {
-      backgroundColor: isDisabled? 'lightgrey' : isSelected ? 'lightgreen' : 'white'
-    };
-    return (
-      <div className="card m-1 p-2" 
-        style={style}
-        onClick={isDisabled ? null : () =>  setSelected(toggle(course, selected))}>
-        <h6 className="card-header text-center">{ getCourseTerm(course) } CS { getCourseNumber(course) }</h6>
-        <div className="card-body">
-          <div className="card-text">{ course.title }</div>
-        </div>
-      </div>
-    );
-};
 
 export default CourseList;
